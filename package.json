@@ -1,6 +1,6 @@
 {
     "name": "open-icecat",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Icecat API - Find product description with EAN, UPC or GTIN-13 with full typescript support",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
