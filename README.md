@@ -1,6 +1,10 @@
-# open-icecat
-
-A simple tool to access the open icecat product information api
+<h1 align="center">open-icecat</h1>
+<p align="center">
+<img src="https://img.shields.io/github/issues/Tjark-Kuehl/open-icecat" alt="Issues">
+<img src="https://img.shields.io/github/last-commit/Tjark-Kuehl/open-icecat" alt="Last Commit">
+<img src="https://img.shields.io/github/license/Tjark-Kuehl/open-icecat" alt="License">
+</p>
+<p align="center">A simple tool to access the open icecat product information api</p>
 
 ## Install
 
