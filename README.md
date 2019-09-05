@@ -4,7 +4,7 @@
 <img src="https://img.shields.io/github/last-commit/Tjark-Kuehl/open-icecat" alt="Last Commit">
 <img src="https://img.shields.io/github/license/Tjark-Kuehl/open-icecat" alt="License">
 </p>
-<p align="center">A simple tool to access the open icecat product information api</p>
+<p align="center">A simple tool to access the open icecat product information API. The Package is build with modern web technologies like fetch to have a small footprint and native performance. It also has some nice features like retrying when the request fails and some interfaces to make typescript development easier.</p>
 
 ## Install
 
