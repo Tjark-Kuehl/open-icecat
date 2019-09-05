@@ -4,7 +4,7 @@ const mergeDeep = require('merge-deep');
 import { IApiClientOptions } from '../interfaces/IApiClientOptions';
 
 type RequestMethods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-interface IApIApiClientOptions extends IApiClientOptions {
+interface IApiClientRequestOptions extends IApiClientOptions {
     method: RequestMethods;
 }
 
@@ -103,7 +103,7 @@ export class ApiClient {
 
     private async fetchInternal(
         url: string,
-        options: IApIApiClientOptions,
+        options: IApiClientRequestOptions,
         retries: number = 3
     ): Promise<any> {
         /** Merge baseOptions with new options */
