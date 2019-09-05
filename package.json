@@ -1,6 +1,10 @@
 {
     "name": "open-icecat",
-    "version": "1.0.1",
+    "version": "1.0.2",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Tjark-Kuehl/open-icecat/"
+    },
     "description": "Icecat API - Find product description with EAN, UPC or GTIN-13 with full typescript support",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
