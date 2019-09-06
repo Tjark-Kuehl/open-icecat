@@ -17,8 +17,8 @@ $ npm i open-icecat
 ## Declaration & Methods
 
 ```js
-interface IApiClientOptions {
-    body?: {};
+interface IRequestOptions {
+    body?: object;
     cache?: RequestCache;
     credentials?: RequestCredentials;
     headers?: HeadersInit;
@@ -53,24 +53,6 @@ const oc = new OpenIcecat({
         lang: 'de'
     }
 });
-
-// You have the option to completely modify the request.
-// OpenIcecat accepts the following options and
-// will set them as the default for any following request.
-interface IApiClientOptions {
-    body?: {};
-    cache?: RequestCache;
-    credentials?: RequestCredentials;
-    headers?: HeadersInit;
-    integrity?: string;
-    keepalive?: boolean;
-    mode?: RequestMode;
-    redirect?: RequestRedirect;
-    referrer?: string;
-    referrerPolicy?: ReferrerPolicy;
-    signal?: AbortSignal | null;
-    window?: any;
-}
 ```
 
 ### 2. Get a Product by Brand & Product Code

@@ -1,156 +1,101 @@
-import fetch from 'node-fetch';
+import { all as deepMerge } from 'deepmerge';
+import fetch, { ResponseInit } from 'node-fetch';
 import queryString from 'query-string';
-const mergeDeep = require('merge-deep');
-import { IApiClientOptions } from '../interfaces/IApiClientOptions';
-
-type RequestMethods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
-interface IApiClientRequestOptions extends IApiClientOptions {
-    method: RequestMethods;
-}
+import { IRequestOptions } from '../interfaces/IRequestOptions';
 
 export class ApiClient {
-    private internalOptions: IApiClientOptions = {
+    private defaultOptions: IRequestOptions = {
         redirect: 'follow',
         headers: { 'Content-Type': 'application/json' }
     };
 
     public constructor(
         private baseURL: string,
-        private baseOptions: IApiClientOptions = { headers: {}, body: {} },
+        private baseOptions: IRequestOptions = {},
         private debug: boolean = false
     ) {}
 
-    /**
-     * Get Request
-     *
-     * @param {string} url Api url
-     * @param {IApiClientOptions} [options={}]
-     * @returns {Promise<any>} Api response
-     * @memberof ApiClient
-     */
-    public get(url: string, options: IApiClientOptions = {}): Promise<any> {
+    public get(url: string, options: IRequestOptions = {}): Promise<any> {
         return this.fetchInternal(url, {
             method: 'GET',
             ...options
         });
     }
 
-    /**
-     * Delete Request
-     *
-     * @param {string} url Api url
-     * @param {IApiClientOptions} [options={}]
-     * @returns {Promise<any>} Api response
-     * @memberof ApiClient
-     */
-    public delete(url: string, options: IApiClientOptions = {}): Promise<any> {
+    public delete(url: string, options: IRequestOptions = {}): Promise<any> {
         return this.fetchInternal(url, {
             method: 'DELETE',
             ...options
         });
     }
 
-    /**
-     * Post Request
-     *
-     * @param {string} url Api Url
-     * @param {{}} body Body data
-     * @param {IApiClientOptions} [options={}]
-     * @returns {(Promise<any | false>)} Api response or false
-     * @memberof ApiClient
-     */
-    public post(url: string, body: {}, options: IApiClientOptions = {}): Promise<any | null> {
+    public post(url: string, options: IRequestOptions = {}): Promise<any | null> {
         return this.fetchInternal(url, {
             method: 'POST',
-            body,
             ...options
         });
     }
 
-    /**
-     * Patch Request
-     *
-     * @param {string} url Api url
-     * @param {{}} body Body data
-     * @param {IApiClientOptions} [options={}]
-     * @returns {Promise<any>} Api response
-     * @memberof ApiClient
-     */
-    public patch(url: string, body: {}, options: IApiClientOptions = {}): Promise<any> {
+    public patch(url: string, options: IRequestOptions = {}): Promise<any> {
         return this.fetchInternal(url, {
             method: 'PATCH',
-            body,
             ...options
         });
     }
 
-    /**
-     * Put Request
-     *
-     * @param {string} url Api url
-     * @param {{}} body Body data
-     * @param {IApiClientOptions} [options={}]
-     * @returns {Promise<any>} Api response
-     * @memberof ApiClient
-     */
-    public put(url: string, body: {}, options: IApiClientOptions = {}): Promise<any> {
+    public put(url: string, options: IRequestOptions = {}): Promise<any> {
         return this.fetchInternal(url, {
             method: 'PUT',
-            body,
             ...options
         });
     }
 
-    private async fetchInternal(
-        url: string,
-        options: IApiClientRequestOptions,
-        retries: number = 3
-    ): Promise<any> {
+    private async fetchInternal(url: string, options: IRequestOptions, retries = 3): Promise<any> {
         /** Merge baseOptions with new options */
-        const mergedOptions = mergeDeep(this.internalOptions, this.baseOptions, options);
+        const mergedOptions = deepMerge<IRequestOptions>([
+            /** Options that are set as the default in this class */
+            this.defaultOptions,
+            /** Options that are set on class initialization */
+            this.baseOptions,
+            /** Options that were set in the function call */
+            options
+        ]);
 
         /** Switch request methods */
-        let parsedURL = url;
-        switch (options.method) {
-            case 'POST' || 'PUT' || 'PATCH':
-                /** Parse given URL */
-                parsedURL =
-                    '?' +
-                    queryString.stringify(
-                        mergeDeep(
-                            queryString.parse(this.baseURL.split('?').pop() || ''),
-                            queryString.parse(url)
-                        )
-                    );
+        let newGetParams = {};
+        const splitBaseURL = this.baseURL.split('?');
+        if (mergedOptions && mergedOptions.method) {
+            /** Get URL without any get parameters */
+            const getParams = splitBaseURL.pop() || '';
+            if (['POST', 'PUT', 'PATCH'].includes(mergedOptions.method)) {
+                /** Merge params from baseURL and new URL */
+                newGetParams = deepMerge([queryString.parse(getParams), queryString.parse(url)]);
 
+                /** Format body to match fetch interface */
                 mergedOptions.body = JSON.stringify(mergedOptions.body);
-                break;
-            case 'GET' || 'DELETE':
-                /** Parse given URL and mix them with body args */
-                parsedURL =
-                    '?' +
-                    queryString.stringify(
-                        mergeDeep(
-                            mergedOptions.body,
-                            queryString.parse(this.baseURL.split('?').pop() || ''),
-                            queryString.parse(url)
-                        )
-                    );
+            } else if (['GET', 'DELETE'].includes(mergedOptions.method)) {
+                /** Merge params from baseURL, new URL and also the body params into the URL */
+                newGetParams = deepMerge([
+                    queryString.parse(getParams),
+                    queryString.parse(url),
+                    mergedOptions.body || {}
+                ]);
 
-                /** Reset body */
-                mergedOptions.body = undefined;
-                break;
+                /** Delete body because it doesnt exist in GET and DELETE requests */
+                delete mergedOptions.body;
+            }
         }
 
-        /** Build full URL */
-        const fullURL = `${this.baseURL.split('?').shift()}${parsedURL}`;
+        /** Build new URL */
+        const newURL = `${splitBaseURL.shift()}?${queryString.stringify(newGetParams)}`;
 
         /** Make debug message */
         if (this.debug) {
-            console.log(`Making request to ${fullURL}`);
+            console.log(`Making request to ${newURL}`);
         }
 
-        const res = await fetch(fullURL, mergedOptions);
+        /** Execute fetch request */
+        const res = await fetch(newURL, mergedOptions as ResponseInit);
         try {
             return await res.json();
         } catch {

@@ -7,12 +7,6 @@ export type GetProductOptions =
           GTIN: string;
       }
     | {
-          UPC: string;
-      }
-    | {
-          JAN: string;
-      }
-    | {
           icecat_id: string | number;
       }
     | {};
