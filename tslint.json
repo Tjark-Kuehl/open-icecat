@@ -1,0 +1,42 @@
+{
+    "root": true,
+    "env": {
+        "node": true
+    },
+    "defaultSeverity": "warning",
+    "linterOptions": {
+        "exclude": ["node_modules/**"]
+    },
+    "extends": ["tslint:latest", "tslint-plugin-prettier", "tslint-config-prettier"],
+    "rules": {
+        "no-implicit-dependencies": false,
+        "no-submodule-imports": false,
+        "prettier": true,
+        "quotemark": [true, "single"],
+        "indent": [true, "spaces", 4],
+        "typedef": [true, "call-signature", "property-declaration"],
+        "no-console": false,
+        "no-debugger": false,
+        "no-bitwise": false,
+        "radix": false,
+        "object-literal-sort-keys": false,
+        "member-ordering": [
+            true,
+            {
+                "order": [
+                    "public-static-field",
+                    "public-instance-field",
+                    "private-static-field",
+                    "private-instance-field",
+                    "public-constructor",
+                    "private-constructor",
+                    "protected-instance-method",
+                    "public-instance-method",
+                    "public-static-method",
+                    "private-instance-method",
+                    "private-static-method"
+                ]
+            }
+        ]
+    }
+}
