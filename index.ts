@@ -1,4 +1,7 @@
 import { ApiClient } from './classes/ApiClient';
+import { IIcecatProductRelatedProducts } from './interfaces/icecatApi/IIcecatProductRelatedProducts';
+import { IIcecatProductReviews } from './interfaces/icecatApi/IIcecatProductReviews';
+import { IIcecatResponse } from './interfaces/IIcecatApiResponse';
 import { IRequestOptions } from './interfaces/IRequestOptions';
 import { GetProductOptions } from './types/GetProductOptions';
 
@@ -10,7 +13,7 @@ export class OpenIcecat {
 
     public constructor(baseOptions: IRequestOptions, private debug: boolean = false) {
         this.apiClient = new ApiClient(
-            'https://live.icecat.biz/api/?Content=GeneralInfo,Image,Multimedia,Gallery,FeatureLogos,Descriptions',
+            'https://live.icecat.biz/api/?Content=All',
             baseOptions,
             debug || false
         );
@@ -20,10 +23,10 @@ export class OpenIcecat {
      * Gets icecat product data
      *
      * @param {GetProductOptions} options Brand + ProductCode, GTIN, icecat_id
-     * @returns {Promise<any>} Api response
+     * @returns {Promise<IIcecatResponse>} Api response
      * @memberof OpenIcecat
      */
-    public async getProduct(options: GetProductOptions): Promise<any> {
+    public async getProduct(options: GetProductOptions): Promise<IIcecatResponse> {
         return this.formatResponse(await this.apiClient.get('', { body: options }));
     }
 
@@ -34,7 +37,7 @@ export class OpenIcecat {
      * @returns {Promise<any>} Api response
      * @memberof OpenIcecat
      */
-    public async getProductReviews(options: GetProductOptions): Promise<any> {
+    public async getProductReviews(options: GetProductOptions): Promise<IIcecatProductReviews> {
         return this.formatResponse(
             await this.apiClient.get('?Content=ReasonsToBuy,Reviews', {
                 body: JSON.stringify(options)
@@ -49,7 +52,9 @@ export class OpenIcecat {
      * @returns {Promise<any>} Api response
      * @memberof OpenIcecat
      */
-    public async getProductRelatedProducts(options: GetProductOptions): Promise<any> {
+    public async getProductRelatedProducts(
+        options: GetProductOptions
+    ): Promise<IIcecatProductRelatedProducts> {
         return this.formatResponse(
             await this.apiClient.get('?Content=Related', { body: JSON.stringify(options) })
         );
