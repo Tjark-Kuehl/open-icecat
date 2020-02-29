@@ -1,6 +1,6 @@
 {
     "name": "open-icecat",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "repository": {
         "type": "git",
         "url": "https://github.com/Tjark-Kuehl/open-icecat/"
@@ -29,18 +29,18 @@
     "license": "MIT",
     "devDependencies": {
         "@types/deepmerge": "^2.2.0",
-        "@types/node-fetch": "^2.5.0",
+        "@types/node-fetch": "^2.5.5",
         "@types/query-string": "^6.3.0",
-        "prettier": "^1.18.2",
+        "prettier": "^1.19.1",
         "ts-node-dev": "^1.0.0-pre.42",
-        "tslint": "^5.19.0",
+        "tslint": "^6.0.0",
         "tslint-config-prettier": "^1.18.0",
-        "tslint-plugin-prettier": "^2.0.1",
-        "typescript": "^3.6.2"
+        "tslint-plugin-prettier": "^2.1.0",
+        "typescript": "^3.8.3"
     },
     "dependencies": {
-        "deepmerge": "^4.0.0",
+        "deepmerge": "^4.2.2",
         "node-fetch": "^2.6.0",
-        "query-string": "^6.8.3"
+        "query-string": "^6.11.0"
     }
 }
