@@ -1,17 +1,20 @@
 {
     "name": "open-icecat",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "repository": {
         "type": "git",
         "url": "https://github.com/Tjark-Kuehl/open-icecat/"
     },
     "description": "Icecat API - Find product description with EAN, UPC or GTIN-13 with full typescript support",
     "main": "dist/index.js",
+    "module": "dist/index.module.js",
+    "unpkg": "dist/index.umd.js",
     "types": "dist/index.d.ts",
     "scripts": {
         "test": "ts-node-dev --respawn --transpileOnly ./test/index.ts",
         "build": "tsc",
-        "prepublish": "tsc",
+        "microbundle": "microbundle",
+        "prepublish": "npm run build && npm run microbundle",
         "update": "npm prune && npm-check -u",
         "lint": "tslint --fix ./**/*.ts{,x}"
     },
@@ -40,6 +43,7 @@
     },
     "dependencies": {
         "deepmerge": "^4.2.2",
+        "microbundle": "^0.11.0",
         "node-fetch": "^2.6.0",
         "query-string": "^6.11.0"
     }
