@@ -15,8 +15,8 @@
         "build": "tsc",
         "microbundle": "microbundle",
         "prepublish": "npm run build && npm run microbundle",
-        "update": "npm prune && npm-check -u",
-        "lint": "tslint --fix ./**/*.ts{,x}"
+        "lint": "tslint --fix ./**/*.ts{,x}",
+        "update": "yarn upgrade --latest"
     },
     "keywords": [
         "icecat",
