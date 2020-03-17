@@ -1,3 +1,6 @@
+<p align="center" style="text-align: center;">
+  <img src="??" alt="Open Icecat Logo" width="128" height="128">
+</p>
 <h1 align="center">open-icecat</h1>
 <p align="center">
 <img src="https://img.shields.io/github/issues/Tjark-Kuehl/open-icecat" alt="Issues">
@@ -93,5 +96,5 @@ const oc = new OpenIcecat({
 
 ### License
 
-Copyright © 2019, [Tjark Kuehl](https://github.com/Tjark-Kuehl)
+Copyright © 2020, [Tjark Kuehl](https://github.com/Tjark-Kuehl)
 Released under the [MIT License](LICENSE).
