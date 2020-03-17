@@ -14,7 +14,7 @@
         "test": "ts-node-dev --respawn --transpileOnly ./test/index.ts",
         "build": "tsc",
         "microbundle": "microbundle",
-        "prepublish": "npm run build && npm run microbundle",
+        "prepublish": "yarn build && yarn microbundle",
         "lint": "tslint --fix ./**/*.ts{,x}",
         "update": "yarn upgrade --latest"
     },
