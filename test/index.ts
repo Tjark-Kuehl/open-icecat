@@ -1,4 +1,4 @@
-import { OpenIcecat } from '../index';
+import { OpenIcecat } from '../src/index';
 
 const oc = new OpenIcecat(
     {
@@ -11,7 +11,7 @@ const oc = new OpenIcecat(
 );
 
 (async () => {
-    /** Get a Product by Brand & Product Code */
+    // Get a Product by Brand & Product Code
     const res = await oc.getProduct({ Brand: 'hp', ProductCode: 'RJ459AV' });
     if (
         res &&
@@ -23,7 +23,7 @@ const oc = new OpenIcecat(
         console.log('failure');
     }
 
-    /** Get a Product by GTIN/EAN/UPC/JAN */
+    // Get a Product by GTIN/EAN/UPC/JAN
     const res2 = await oc.getProduct({ GTIN: '0882780751682' });
     if (
         res2 &&
@@ -35,7 +35,7 @@ const oc = new OpenIcecat(
         console.log('failure');
     }
 
-    /** Get a Product by icecat_id */
+    // Get a Product by icecat_id
     const res3 = await oc.getProduct({ icecat_id: 1198270 });
     if (res3 && res3.GeneralInfo && res3.GeneralInfo.IcecatId * 1 === 1198270) {
         console.log('success');
@@ -43,7 +43,7 @@ const oc = new OpenIcecat(
         console.log('failure');
     }
 
-    /** Change the language for a single request */
+    // Change the language for a single request
     const res4 = await oc.getProduct({ lang: 'en', Brand: 'hp', ProductCode: 'RJ459AV' });
     if (
         res4 &&

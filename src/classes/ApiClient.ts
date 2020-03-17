@@ -1,7 +1,7 @@
 import { all as deepMerge } from 'deepmerge';
-import fetch, { ResponseInit } from 'node-fetch';
+import nodeFetch, { ResponseInit } from 'node-fetch';
 import queryString from 'query-string';
-import { IRequestOptions } from '../interfaces/IRequestOptions';
+import { IRequestOptions } from '@/interfaces/IRequestOptions';
 
 export class ApiClient {
     private defaultOptions: IRequestOptions = {
@@ -51,50 +51,50 @@ export class ApiClient {
     }
 
     private async fetchInternal(url: string, options: IRequestOptions, retries = 3): Promise<any> {
-        /** Merge baseOptions with new options */
+        // Merge baseOptions with new options
         const mergedOptions = deepMerge<IRequestOptions>([
-            /** Options that are set as the default in this class */
+            // Options that are set as the default in this class
             this.defaultOptions,
-            /** Options that are set on class initialization */
+            // Options that are set on class initialization
             this.baseOptions,
-            /** Options that were set in the function call */
+            // Options that were set in the function call
             options
         ]);
 
-        /** Switch request methods */
+        // Switch request methods
         let newGetParams = {};
         const splitBaseURL = this.baseURL.split('?');
         if (mergedOptions && mergedOptions.method) {
-            /** Get URL without any get parameters */
+            // Get URL without any get parameters
             const getParams = splitBaseURL.pop() || '';
             if (['POST', 'PUT', 'PATCH'].includes(mergedOptions.method)) {
-                /** Merge params from baseURL and new URL */
+                // Merge params from baseURL and new URL
                 newGetParams = deepMerge([queryString.parse(getParams), queryString.parse(url)]);
 
-                /** Format body to match fetch interface */
+                // Format body to match fetch interface
                 mergedOptions.body = JSON.stringify(mergedOptions.body);
             } else if (['GET', 'DELETE'].includes(mergedOptions.method)) {
-                /** Merge params from baseURL, new URL and also the body params into the URL */
+                // Merge params from baseURL, new URL and also the body params into the URL
                 newGetParams = deepMerge([
                     queryString.parse(getParams),
                     queryString.parse(url),
                     mergedOptions.body || {}
                 ]);
 
-                /** Delete body because it doesnt exist in GET and DELETE requests */
+                // Delete body because it doesnt exist in GET and DELETE requests
                 delete mergedOptions.body;
             }
         }
 
-        /** Build new URL */
+        // Build new URL
         const newURL = `${splitBaseURL.shift()}?${queryString.stringify(newGetParams)}`;
 
-        /** Make debug message */
+        // Make debug message
         if (this.debug) {
             console.log(`Making request to ${newURL}`);
         }
 
-        /** Execute fetch request */
+        // Execute fetch request
         const res = await fetch(newURL, mergedOptions as ResponseInit);
         try {
             return await res.json();

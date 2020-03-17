@@ -1,9 +1,9 @@
-import { ApiClient } from './classes/ApiClient';
-import { IIcecatProductRelatedProducts } from './interfaces/icecatApi/IIcecatProductRelatedProducts';
-import { IIcecatProductReviews } from './interfaces/icecatApi/IIcecatProductReviews';
-import { IIcecatResponse } from './interfaces/IIcecatApiResponse';
-import { IRequestOptions } from './interfaces/IRequestOptions';
-import { GetProductOptions } from './types/GetProductOptions';
+import { ApiClient } from '@/classes/ApiClient';
+import { IIcecatProductRelatedProducts } from '@/interfaces/icecatApi/IIcecatProductRelatedProducts';
+import { IIcecatProductReviews } from '@/interfaces/icecatApi/IIcecatProductReviews';
+import { IIcecatResponse } from '@/interfaces/IIcecatApiResponse';
+import { IRequestOptions } from '@/interfaces/IRequestOptions';
+import { GetProductOptions } from '@/types/GetProductOptions';
 
 /**
  * Open Icecat API - Find product description with EAN, UPC or GTIN-13 with full typescript support

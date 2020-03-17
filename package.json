@@ -1,22 +1,12 @@
 {
     "name": "open-icecat",
+    "description": "Icecat API - Find product description with EAN, UPC or GTIN-13 with full typescript support",
+    "author": "Tjark Kühl",
+    "license": "MIT",
     "version": "1.2.2",
     "repository": {
         "type": "git",
         "url": "https://github.com/Tjark-Kuehl/open-icecat/"
-    },
-    "description": "Icecat API - Find product description with EAN, UPC or GTIN-13 with full typescript support",
-    "main": "dist/index.js",
-    "module": "dist/index.module.js",
-    "unpkg": "dist/index.umd.js",
-    "types": "dist/index.d.ts",
-    "scripts": {
-        "test": "ts-node-dev --respawn --transpileOnly ./test/index.ts",
-        "build": "tsc",
-        "microbundle": "microbundle",
-        "prepublish": "yarn build && yarn microbundle",
-        "lint": "tslint --fix ./**/*.ts{,x}",
-        "update": "yarn upgrade --latest"
     },
     "keywords": [
         "icecat",
@@ -28,8 +18,13 @@
         "information",
         "javascript"
     ],
-    "author": "Tjark Kuehl",
-    "license": "MIT",
+    "scripts": {
+        "test": "ts-node-dev --respawn --transpileOnly ./test/index.ts",
+        "build": "tsc",
+        "prepublish": "yarn build",
+        "lint": "tslint --fix ./src/**/*.ts{,x}",
+        "update": "yarn upgrade --latest"
+    },
     "devDependencies": {
         "@types/deepmerge": "^2.2.0",
         "@types/node-fetch": "^2.5.5",
@@ -38,12 +33,12 @@
         "ts-node-dev": "^1.0.0-pre.42",
         "tslint": "^6.0.0",
         "tslint-config-prettier": "^1.18.0",
+        "tslint-microsoft-contrib": "^6.2.0",
         "tslint-plugin-prettier": "^2.1.0",
         "typescript": "^3.8.3"
     },
     "dependencies": {
         "deepmerge": "^4.2.2",
-        "microbundle": "^0.11.0",
         "node-fetch": "^2.6.0",
         "query-string": "^6.11.0"
     }
