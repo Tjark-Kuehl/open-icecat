@@ -13,7 +13,9 @@
     "rules": {
         "prettier": true,
         "no-implicit-dependencies": false,
-        "no-submodule-imports": false
+        "no-submodule-imports": false,
+        "export-name": false,
+        "prefer-type-cast": false
     },
     "rulesDirectory": ["node_modules/tslint-microsoft-contrib"]
 }

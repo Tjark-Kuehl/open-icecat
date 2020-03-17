@@ -1,10 +1,11 @@
 {
     "compilerOptions": {
         /* Basic Options */
-        "target": "es5",
+        "target": "ESNext",
         "module": "ESNext",
         "moduleResolution": "node",
-        "outDir": "dist",
+        "outDir": "./dist",
+        "declarationDir": "./dist",
         "removeComments": true,
         "importHelpers": true,
         "downlevelIteration": true,
@@ -34,5 +35,6 @@
             "@/*": ["./src/*"]
         }
     },
+    "include": ["./src/**/*"],
     "exclude": ["node_modules", "dist"]
 }

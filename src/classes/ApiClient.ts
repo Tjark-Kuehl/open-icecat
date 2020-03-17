@@ -95,7 +95,7 @@ export class ApiClient {
         }
 
         // Execute fetch request
-        const res = await fetch(newURL, mergedOptions as ResponseInit);
+        const res = await fetch(newURL, mergedOptions as RequestInit);
         try {
             return await res.json();
         } catch {
