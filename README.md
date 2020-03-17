@@ -1,5 +1,5 @@
 <p align="center" style="text-align: center;">
-  <img src="??" alt="Open Icecat Logo" width="128" height="128">
+  <img src="https://github.com/Tjark-Kuehl/open-icecat/blob/master/open-icecat-logo.svg?raw=true" alt="Open Icecat Logo" width="128" height="128">
 </p>
 <h1 align="center">open-icecat</h1>
 <p align="center">
