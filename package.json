@@ -23,6 +23,7 @@
     ],
     "scripts": {
         "test": "jest",
+        "testwatch": "jest --watch",
         "build": "rollup -c",
         "watch": "rollup -cw",
         "prepublish": "yarn build",
