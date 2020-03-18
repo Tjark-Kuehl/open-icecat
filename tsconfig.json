@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         /* Basic Options */
-        "target": "ESNext",
+        "target": "ES2019",
         "module": "ESNext",
         "moduleResolution": "node",
         "outDir": "./dist",
@@ -30,10 +30,7 @@
         /* Module Resolution Options */
         "baseUrl": ".",
         "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
-        "paths": {
-            "@/*": ["./src/*"]
-        }
+        "esModuleInterop": true
     },
     "include": ["./src/**/*"],
     "exclude": ["node_modules", "dist"]

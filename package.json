@@ -22,7 +22,7 @@
         "javascript"
     ],
     "scripts": {
-        "test": "ts-node-dev --respawn --transpileOnly ./test/index.ts",
+        "test": "jest",
         "build": "rollup -c",
         "watch": "rollup -cw",
         "prepublish": "yarn build",
@@ -30,16 +30,16 @@
         "update": "yarn upgrade --latest"
     },
     "devDependencies": {
-        "@types/deepmerge": "^2.2.0",
-        "@types/node-fetch": "^2.5.5",
-        "@types/query-string": "^6.3.0",
+        "@babel/preset-env": "^7.8.7",
+        "@babel/preset-typescript": "^7.8.3",
+        "@types/jest": "^25.1.4",
+        "jest": "^25.1.0",
         "prettier": "^1.19.1",
-        "rollup": "^2.0.6",
+        "rollup": "^2.1.0",
         "rollup-plugin-clear": "^2.0.7",
         "rollup-plugin-filesize": "^6.2.1",
         "rollup-plugin-terser": "^5.3.0",
         "rollup-plugin-typescript2": "^0.26.0",
-        "ts-node-dev": "^1.0.0-pre.42",
         "tslint": "^6.0.0",
         "tslint-config-prettier": "^1.18.0",
         "tslint-microsoft-contrib": "^6.2.0",
@@ -47,8 +47,7 @@
         "typescript": "^3.8.3"
     },
     "dependencies": {
-        "deepmerge": "^4.2.2",
-        "node-fetch": "^2.6.0",
-        "query-string": "^6.11.0"
+        "ky": "^0.19.0",
+        "ky-universal": "^0.5.0"
     }
 }

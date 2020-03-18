@@ -1,22 +1,34 @@
-import { ApiClient } from '@/classes/ApiClient';
-import { IIcecatProductRelatedProducts } from '@/interfaces/icecatApi/IIcecatProductRelatedProducts';
-import { IIcecatProductReviews } from '@/interfaces/icecatApi/IIcecatProductReviews';
-import { IIcecatResponse } from '@/interfaces/IIcecatApiResponse';
-import { IRequestOptions } from '@/interfaces/IRequestOptions';
-import { GetProductOptions } from '@/types/GetProductOptions';
+import { IIcecatRelatedProducts } from './interfaces/icecatApi/IIcecatRelatedProducts';
+import { IIcecatProductReviews } from './interfaces/icecatApi/IIcecatProductReviews';
+import { IIcecatResponse } from './interfaces/IIcecatResponse';
+import { GetProductOptions } from './types/GetProductOptions';
+
+import { objectToQueryString } from './inc/queryString';
+import ky from 'ky-universal';
 
 /**
  * Open Icecat API - Find product description with EAN, UPC or GTIN-13 with full typescript support
  */
 export class OpenIcecat {
-    private apiClient: ApiClient;
+    private api: typeof ky;
 
-    public constructor(baseOptions: IRequestOptions, private debug: boolean = false) {
-        this.apiClient = new ApiClient(
-            'https://live.icecat.biz/api/?Content=All',
-            baseOptions,
-            debug || false
-        );
+    public constructor(private baseParams: {}) {
+        this.api = ky.create({
+            retry: { limit: 2 },
+            prefixUrl: 'https://live.icecat.biz/api/'
+        });
+    }
+
+    /**
+     * Combines the get parameters with the base searchParams
+     * @param params Get parameters
+     */
+    private combineParams(params: {}, additionalParams: {} = {}): {} {
+        return {
+            ...this.baseParams,
+            ...params,
+            ...additionalParams
+        };
     }
 
     /**
@@ -27,21 +39,23 @@ export class OpenIcecat {
      * @memberof OpenIcecat
      */
     public async getProduct(options: GetProductOptions): Promise<IIcecatResponse> {
-        return this.formatResponse(await this.apiClient.get('', { body: options }));
+        return this.parse(this.api.get(objectToQueryString(this.combineParams(options))));
     }
 
     /**
      * Gets only the icecat product reviews
      *
      * @param {GetProductOptions} options Brand + ProductCode, GTIN, icecat_id
-     * @returns {Promise<any>} Api response
+     * @returns {Promise<IIcecatProductReviews>} Api response
      * @memberof OpenIcecat
      */
     public async getProductReviews(options: GetProductOptions): Promise<IIcecatProductReviews> {
-        return this.formatResponse(
-            await this.apiClient.get('?Content=ReasonsToBuy,Reviews', {
-                body: JSON.stringify(options)
-            })
+        return this.parse(
+            this.api.get(
+                objectToQueryString(
+                    this.combineParams(options, { Content: 'ReasonsToBuy,Reviews' })
+                )
+            )
         );
     }
 
@@ -49,36 +63,33 @@ export class OpenIcecat {
      * Gets only the icecat products related products
      *
      * @param {GetProductOptions} options Brand + ProductCode, GTIN, icecat_id
-     * @returns {Promise<any>} Api response
+     * @returns {Promise<IIcecatRelatedProducts>} Api response
      * @memberof OpenIcecat
      */
     public async getProductRelatedProducts(
         options: GetProductOptions
-    ): Promise<IIcecatProductRelatedProducts> {
-        return this.formatResponse(
-            await this.apiClient.get('?Content=Related', { body: JSON.stringify(options) })
+    ): Promise<IIcecatRelatedProducts> {
+        return this.parse(
+            this.api.get(objectToQueryString(this.combineParams(options, { Content: 'Related' })))
         );
     }
 
     /**
-     * Formats the response ands checks if needed data is present
+     * Parses the response ands checks if needed data is present
      *
      * @private
      * @param {*} response Icecat api response
-     * @returns {Promise<any>} Unpacked data or empty object
+     * @returns {Promise<{}>} Unpacked data or empty object
      * @memberof OpenIcecat
      */
-    private async formatResponse(response: any): Promise<any> {
-        if (response) {
-            if (this.debug && 'statusCode' in response && 'message' in response) {
-                console.log(response.message);
+    private async parse(response: any): Promise<any> {
+        try {
+            const res = await response.json();
+            if (res?.msg === 'OK' && res?.data) {
+                return res.data;
             }
-            if ('msg' in response && 'data' in response) {
-                if (response.msg === 'OK') {
-                    return response.data;
-                }
-            }
-        }
+            // tslint:disable-next-line: no-empty
+        } catch {}
         return {};
     }
 }
