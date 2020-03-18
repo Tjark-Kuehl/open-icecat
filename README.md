@@ -51,10 +51,8 @@ class OpenIcecat {
 import { OpenIcecat } from 'open-icecat';
 
 const oc = new OpenIcecat({
-    body: {
-        username: 'your-username',
-        lang: 'de'
-    }
+    username: 'your-username',
+    lang: 'en'
 });
 ```
 
