@@ -20,23 +20,8 @@ $ npm i open-icecat
 ## Declaration & Methods
 
 ```js
-interface IRequestOptions {
-    body?: object;
-    cache?: RequestCache;
-    credentials?: RequestCredentials;
-    headers?: HeadersInit;
-    integrity?: string;
-    keepalive?: boolean;
-    mode?: RequestMode;
-    redirect?: RequestRedirect;
-    referrer?: string;
-    referrerPolicy?: ReferrerPolicy;
-    signal?: AbortSignal | null;
-    window?: any;
-}
-
 class OpenIcecat {
-    constructor(baseOptions: IApiClientOptions, debug?: boolean);
+    constructor(baseParams: {});
     getProduct(options: GetProductOptions);
     getProductReviews(options: GetProductOptions);
     getProductRelatedProducts(options: GetProductOptions);
