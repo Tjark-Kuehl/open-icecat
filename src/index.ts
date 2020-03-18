@@ -92,13 +92,7 @@ export class OpenIcecat {
         if (res.statusCode && res.statusCode === 8) {
             throw new Error(`accessing 'full icecat' products that can't be accessed`);
         }
-        // try {
 
-        //     // tslint:disable-next-line: no-empty
-        // } catch (e) {
-        //     console.log(e);
-        //     throw new Error('HTTPError, this can occour when accessing `full icecat` products');
-        // }
         return {};
     }
 }
