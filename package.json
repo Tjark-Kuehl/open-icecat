@@ -3,7 +3,7 @@
     "description": "Icecat API - Find product description with EAN, UPC or GTIN-13 with full typescript support",
     "author": "Tjark Kühl",
     "license": "MIT",
-    "version": "1.2.2",
+    "version": "1.3.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/Tjark-Kuehl/open-icecat/"
@@ -39,6 +39,7 @@
         "rollup": "^2.23.0",
         "rollup-plugin-clear": "^2.0.7",
         "rollup-plugin-filesize": "^9.0.2",
+        "rollup-plugin-gzip": "^2.5.0",
         "rollup-plugin-terser": "^6.1.0",
         "rollup-plugin-typescript2": "^0.27.1",
         "tslint": "^6.1.2",
