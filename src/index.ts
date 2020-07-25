@@ -4,7 +4,10 @@ import { IIcecatResponse } from './interfaces/IIcecatResponse';
 import { GetProductOptions } from './types/GetProductOptions';
 
 import { objectToQueryString } from './inc/queryString';
-import ky from 'ky-universal';
+// import ky from 'ky-universal';
+const ky = require('ky-universal').extend({
+    throwHttpErrors: false
+});
 
 /**
  * Open Icecat API - Find product description with EAN, UPC or GTIN-13 with full typescript support
@@ -14,8 +17,7 @@ export class OpenIcecat {
 
     public constructor(private baseParams: {}) {
         this.api = ky.create({
-            prefixUrl: 'https://live.icecat.biz/api/',
-            throwHttpErrors: false
+            prefixUrl: 'https://live.icecat.biz/api/'
         });
     }
 
