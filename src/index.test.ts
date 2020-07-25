@@ -90,10 +90,10 @@ describe('OpenIcecat class', () => {
         it('Should correctly switch languages 2 times', async () => {
             const oi = new OpenIcecat(baseBody);
             const res = await oi.getProduct({ lang: 'en', icecat_id: 13818141 });
-            expect(res.GeneralInfo?.Title).toEqual('Acer 4GB DDR3 memory module');
+            expect(res.GeneralInfo?.Title).toEqual('Acer 4GB DDR3 memory module 1 x 4 GB');
 
             const res2 = await oi.getProduct({ lang: 'de', icecat_id: 13818141 });
-            expect(res2.GeneralInfo?.Title).toEqual('Acer 4GB DDR3 Speichermodul');
+            expect(res2.GeneralInfo?.Title).toEqual('Acer 4GB DDR3 Speichermodul 1 x 4 GB');
         });
     });
 });
