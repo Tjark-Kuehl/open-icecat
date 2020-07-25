@@ -90,7 +90,7 @@ export class OpenIcecat {
 
         // Catch error
         if (res.statusCode && res.statusCode === 8) {
-            throw new Error(`accessing 'full icecat' products that can't be accessed`);
+            throw new Error(`cannot access 'full icecat' products`);
         }
 
         return {};

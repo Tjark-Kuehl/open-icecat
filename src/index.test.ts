@@ -80,9 +80,7 @@ describe('OpenIcecat class', () => {
                 error = e;
             }
 
-            expect(error).toEqual(
-                new Error(`accessing 'full icecat' products that can't be accessed`)
-            );
+            expect(error).toEqual(new Error(`cannot access 'full icecat' products`));
         });
     });
 
