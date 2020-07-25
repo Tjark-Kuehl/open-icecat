@@ -37,7 +37,7 @@ jobs:
         run: yarn test
           
       - name: Building
-		if: success()
+        if: success()
         run: yarn build
           
       - name: Create Artifact
