@@ -3,7 +3,7 @@
     "description": "Icecat API - Find product description with EAN, UPC or GTIN-13 with full typescript support",
     "author": "Tjark Kühl",
     "license": "MIT",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "main": "src/index.ts",
     "repository": {
         "type": "git",
